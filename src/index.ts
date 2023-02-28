@@ -1,1 +1,2 @@
-console.log('Hellow World')
+export const test = console.log('Hellow World')
+
