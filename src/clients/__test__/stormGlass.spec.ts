@@ -6,13 +6,15 @@ import stormGlassNormalized3HoursJson from '@test/fixtures/stormGlass-normalized
 jest.mock('axios');
 
 describe('StormGlass client', () => {
+    const mockedAxios = axios as jest.Mocked<typeof axios>
+
     it('should return normalized forecast from the StormGlass API', async () => {
         const lat = -33.7927726;
         const lng = -151.289824;
 
-        axios.get = jest.fn().mockResolvedValue(stormGlassWeather3HoursJson)
+        mockedAxios.get.mockResolvedValue({ data: stormGlassWeather3HoursJson })
 
-        const stormGlass = new StormGlass(axios);
+        const stormGlass = new StormGlass(mockedAxios);
         const response = await stormGlass.fetchPoints(lat, lng);
         expect(response).toEqual(stormGlassNormalized3HoursJson)
     })
