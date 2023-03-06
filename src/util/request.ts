@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 export interface RequestConfig extends AxiosRequestConfig {
 
@@ -15,5 +15,9 @@ export class Request {
 
     public async get<T>(url: string, config: RequestConfig = {}): Promise<Response> {
         return await this.request.get<T, Response<T>>(url, config);
+    }
+
+    public static isRequestError(error: AxiosError): boolean {
+        return !!(error.response && error.response.status);
     }
 }
